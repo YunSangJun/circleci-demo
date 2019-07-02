@@ -4,7 +4,7 @@ orbs:
   aws-ecs: circleci/aws-ecs@0.0.3
 jobs:
   build:
-    working_directory: ~/spring-boot-demo
+    working_directory: ~/circleci-demo
 
     docker:
       - image: circleci/openjdk:8-jdk-browsers
@@ -14,14 +14,14 @@ jobs:
       - setup_remote_docker
 
       - restore_cache:
-          key: spring-boot-demo-{{ checksum "pom.xml" }}
+          key: circleci-demo-{{ checksum "pom.xml" }}
       
       - run: mvn dependency:go-offline
       
       - save_cache:
           paths:
             - ~/.m2
-          key: spring-boot-demo-{{ checksum "pom.xml" }}
+          key: circleci-demo-{{ checksum "pom.xml" }}
       
       - run: mvn package
       
@@ -29,7 +29,7 @@ jobs:
           path: target/surefire-reports
       
       - store_artifacts:
-          path: target/spring-boot-demo-0.0.1-SNAPSHOT.jar
+          path: target/circleci-demo-0.0.1-SNAPSHOT.jar
 
       - run:
           name: Setup common environment variables
