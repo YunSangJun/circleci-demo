@@ -18,14 +18,14 @@ jobs:
       - setup_remote_docker
 
       - restore_cache:
-          key: circleci-demo-
+          key: circleci-demo-{{ checksum "pom.xml" }}
       
       - run: mvn dependency:go-offline
       
       - save_cache:
           paths:
             - ~/.m2
-          key: circleci-demo-
+          key: circleci-demo-{{ checksum "pom.xml" }}
       
       - run: mvn package
       
